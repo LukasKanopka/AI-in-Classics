@@ -47,6 +47,7 @@ SELECT DISTINCT
     END AS match,
     COALESCE(l.id, f.lemma_id)              AS dictionary_lemma_id,
     COALESCE(l.lemma_nod, l_final.lemma_nod) AS dictionary_lemma,
+    COALESCE(l.definition, l_final.definition) AS definition,
     CASE
         WHEN l.id IS NOT NULL        THEN 'Direct Lemma'
         WHEN f.lemma_id IS NOT NULL  THEN 'Inflected Form'

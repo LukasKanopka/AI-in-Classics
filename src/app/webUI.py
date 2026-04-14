@@ -456,6 +456,7 @@ def latin_sentiment_overlay_popup_html(
             cnt = det.get("count") or ""
             pm = det.get("pos_match")
             pm_s = "" if pm is None else ("yes" if pm else "no")
+            definition = det.get("definition") or sp.get("definition") or ""
 
             bg = _sentiment_bg(sc)
             parts.append(
@@ -468,6 +469,7 @@ def latin_sentiment_overlay_popup_html(
                 f'data-source="{_html.escape(str(prov))}" '
                 f'data-count="{_html.escape(str(cnt))}" '
                 f'data-posmatch="{_html.escape(str(pm_s))}" '
+                f'data-definition="{_html.escape(str(definition))}" '
                 f'style="background:{bg}; border-color:{bg};"'
                 f">{surface}</span>"
             )
@@ -491,6 +493,7 @@ def latin_sentiment_overlay_popup_html(
         <div class="lex-popup-row"><span class="k">count</span> <span id="lexCount"></span></div>
         <div class="lex-popup-row"><span class="k">source</span> <span id="lexSource"></span></div>
         <div class="lex-popup-row"><span class="k">pos match</span> <span id="lexPosMatch"></span></div>
+        <div class="lex-popup-row lex-popup-definition"><span class="k">definition</span> <span id="lexDefinition"></span></div>
       </div>
     </div>
 
@@ -566,9 +569,17 @@ def latin_sentiment_overlay_popup_html(
         font-size: 0.92rem;
         padding: 2px 0;
       }}
+      .lex-popup-definition {{
+        align-items: flex-start;
+      }}
       .lex-popup-row .k {{
         color: var(--popup-muted);
         white-space: nowrap;
+      }}
+      #lexDefinition {{
+        text-align: right;
+        line-height: 1.3;
+        max-width: 220px;
       }}
     </style>
 
@@ -582,6 +593,7 @@ def latin_sentiment_overlay_popup_html(
         const countEl = document.getElementById('lexCount');
         const sourceEl = document.getElementById('lexSource');
         const posMatchEl = document.getElementById('lexPosMatch');
+        const definitionEl = document.getElementById('lexDefinition');
 
         function hide() {{
           popup.style.display = 'none';
@@ -599,6 +611,7 @@ def latin_sentiment_overlay_popup_html(
           const source = chip.dataset.source || '';
           const count = chip.dataset.count || '';
           const posmatch = chip.dataset.posmatch || '';
+          const definition = chip.dataset.definition || '';
 
           titleEl.textContent = lemma;
           scoreEl.textContent = score;
@@ -607,6 +620,7 @@ def latin_sentiment_overlay_popup_html(
           countEl.textContent = (count !== '' ? count : '—');
           sourceEl.textContent = source || '—';
           posMatchEl.textContent = posmatch || '—';
+          definitionEl.textContent = definition || '—';
 
           popup.style.display = 'block';
 

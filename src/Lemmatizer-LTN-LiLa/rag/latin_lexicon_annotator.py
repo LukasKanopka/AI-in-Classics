@@ -277,6 +277,7 @@ class LatinLexiconAnnotator:
         lemma_counts: Counter[str] = Counter()
         lemma_pos_bucket: dict[str, str] = {}
         lemma_pos_raw: dict[str, Optional[str]] = {}
+        lemma_definition: dict[str, Optional[str]] = {}
 
         for tok, cnt in token_counts.items():
             lemma_id = token_chosen_lemma_id.get(tok)
@@ -290,10 +291,12 @@ class LatinLexiconAnnotator:
                 "lemma_key": lemma_key,
                 "pos_bucket": bucket,
                 "pos_raw": pos_raw,
+                "definition": m.get("definition"),
             }
             lemma_counts[lemma_key] += int(cnt)
             lemma_pos_bucket[lemma_key] = bucket
             lemma_pos_raw[lemma_key] = pos_raw
+            lemma_definition[lemma_key] = m.get("definition")
 
         # --- Resolve sentiment-only matches ---
         sent_ids = sorted(set(token_chosen_sent_id.values()))
@@ -364,6 +367,7 @@ class LatinLexiconAnnotator:
                 "count": count,
                 "scraped_pos": lemma_pos_raw.get(lemma_key),
                 "scraped_pos_bucket": bucket,
+                "definition": chosen_row.get("definition") or lemma_definition.get(lemma_key),
                 "affectus_lemma": chosen_row.get("lemma_raw"),
                 "affectus_pos": chosen_row.get("pos"),
                 "affectus_pos_bucket": chosen_row.get("pos_bucket"),
@@ -396,6 +400,7 @@ class LatinLexiconAnnotator:
                 "count": count,
                 "scraped_pos": None,
                 "scraped_pos_bucket": bucket,
+                "definition": m.get("definition"),
                 "affectus_lemma": m.get("lemma_raw"),
                 "affectus_pos": m.get("pos"),
                 "affectus_pos_bucket": bucket,
@@ -422,6 +427,7 @@ class LatinLexiconAnnotator:
                         "has_polarity": None,
                         "provenance": None,
                         "pos_match": None,
+                        "definition": None,
                     }
                 )
                 continue
@@ -439,6 +445,11 @@ class LatinLexiconAnnotator:
                     "has_polarity": (chosen_sent.get("has_polarity") if chosen_sent else None),
                     "provenance": (chosen_sent.get("provenance") if chosen_sent else None),
                     "pos_match": (chosen_sent.get("pos_match") if chosen_sent else None),
+                    "definition": (
+                        chosen_sent.get("definition")
+                        if chosen_sent
+                        else m.get("definition")
+                    ),
                 }
             )
 
@@ -616,7 +627,7 @@ class LatinLexiconAnnotator:
         with self._conn.cursor() as cur:
             cur.execute(
                 """
-                SELECT id, lemma_nod::text AS lemma_nod, lemma_diac, pos
+                SELECT id, lemma_nod::text AS lemma_nod, lemma_diac, pos, definition
                 FROM public.lemmas
                 WHERE id = ANY(%s)
                 """,
@@ -633,7 +644,7 @@ class LatinLexiconAnnotator:
             cur.execute(
                 """
                 SELECT dictionary_lemma_id, sentiment_lemma, pos,
-                       polarity_score, has_polarity, match_source
+                       polarity_score, has_polarity, match_source, definition
                 FROM public.lemma_sentiment_map
                 WHERE dictionary_lemma_id = ANY(%s) AND match = TRUE
                 """,
@@ -648,6 +659,7 @@ class LatinLexiconAnnotator:
                 "polarity_score": float(r["polarity_score"]) if r["polarity_score"] is not None else None,
                 "has_polarity": r["has_polarity"],
                 "provenance": r["match_source"],
+                "definition": r["definition"],
                 "pos_bucket": _pos_bucket_from_affectus(r["pos"]),
             })
         return dict(grouped)
@@ -660,7 +672,7 @@ class LatinLexiconAnnotator:
             cur.execute(
                 """
                 SELECT sentiment_id, sentiment_lemma, pos,
-                       polarity_score, has_polarity, match_source
+                       polarity_score, has_polarity, match_source, definition
                 FROM public.lemma_sentiment_map
                 WHERE sentiment_id = ANY(%s)
                 """,
@@ -675,6 +687,7 @@ class LatinLexiconAnnotator:
                 "polarity_score": float(r["polarity_score"]) if r["polarity_score"] is not None else None,
                 "has_polarity": r["has_polarity"],
                 "provenance": r["match_source"],
+                "definition": r["definition"],
                 "pos_bucket": _pos_bucket_from_affectus(r["pos"]),
             }
         return out
@@ -807,6 +820,7 @@ class LatinLexiconAnnotator:
                     "count": count,
                     "scraped_pos": lemma_pos_raw.get(lemma_key),
                     "scraped_pos_bucket": bucket,
+                    "definition": chosen_row.get("definition"),
                     "affectus_lemma": chosen_row.get("lemma_raw"),
                     "affectus_pos": chosen_row.get("pos"),
                     "affectus_pos_bucket": chosen_row.get("pos_bucket"),
@@ -838,6 +852,7 @@ class LatinLexiconAnnotator:
                     "count": count,
                     "scraped_pos": None,
                     "scraped_pos_bucket": bucket,
+                    "definition": m.get("definition"),
                     "affectus_lemma": m.get("lemma_raw"),
                     "affectus_pos": m.get("pos"),
                     "affectus_pos_bucket": bucket,
@@ -903,7 +918,7 @@ class LatinLexiconAnnotator:
                 continue
             try:
                 sc = float(score)
-                if sc == 0.0:
+                if sc == 0.0: # Remove to include neutral scores in model feed
                     continue
             except Exception:
                 continue
