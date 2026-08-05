@@ -14,7 +14,7 @@ import numpy as np
 from sklearn.metrics import f1_score, accuracy_score
 
 # ── Model / tokenizer toggle ──────────────────────────────────────────────────
-if False:
+if True:
     MODEL_PATH = "bert-base-multilingual-cased"
     TOKENIZER_PATH = "bert-base-multilingual-cased"
     TOKENIZER = AutoTokenizer.from_pretrained(TOKENIZER_PATH)

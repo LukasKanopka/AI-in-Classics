@@ -1,12 +1,19 @@
 import torch
 import json
-from transformers import AutoModelForSequenceClassification
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
 from bert_utils.tokenizer import LatinHFTokenizer
 from pathlib import Path
 
 # 1. SETUP
-MODEL_PATH = "output/final_models/latin_bert_2026_04_07_06_29_14"
-TOKENIZER_PATH = "models/bert_models/subword_tokenizer_latin/latin.subword.encoder"
+
+if True:
+    MODEL_PATH = "bert-base-multilingual-cased"
+    TOKENIZER_PATH = "bert-base-multilingual-cased"
+    TOKENIZER = AutoTokenizer.from_pretrained(TOKENIZER_PATH)
+else:
+    MODEL_PATH = "output/final_models/latin_bert_2026_04_07_06_29_14"
+    TOKENIZER_PATH = "models/bert_models/subword_tokenizer_latin/latin.subword.encoder"
+    TOKENIZER = LatinHFTokenizer(TOKENIZER_PATH)
 
 LABEL_MAP = {0: "NEG", 1: "POS", 2: "NEU"}
 RAW_MAP = {"LABEL_0": 0, "LABEL_1": 1, "LABEL_2": 2}
@@ -17,7 +24,7 @@ def run_dataset_eval():
     log_file_path = Path(MODEL_PATH) / "eval_results.txt"
 
     print("Initializing Tokenizer and Model...")
-    tokenizer = LatinHFTokenizer(TOKENIZER_PATH)
+    tokenizer = TOKENIZER
     model = AutoModelForSequenceClassification.from_pretrained(MODEL_PATH, num_labels=3)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

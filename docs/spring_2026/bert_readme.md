@@ -48,5 +48,4 @@ latin sentiment analysis
 claude sonnet 4.6 Thinking
 gemini 3.1 Thinking
 chatgpt default
-claude sonnet 4.6 Thinking
 deepseek v3.2 Deep Think

@@ -1,0 +1,36 @@
+{
+  "model": "llama3.1:8b",
+  "total_examples": 70,
+  "correct": 32,
+  "accuracy": 0.45714285714285713,
+  "labels": {
+    "0": "negative",
+    "1": "positive",
+    "2": "neutral"
+  },
+  "confusion_matrix": {
+    "orientation": "rows are actual labels; columns are predicted labels",
+    "label_order": [
+      0,
+      1,
+      2
+    ],
+    "values": [
+      [
+        0,
+        21,
+        11
+      ],
+      [
+        0,
+        28,
+        4
+      ],
+      [
+        0,
+        2,
+        4
+      ]
+    ]
+  }
+}
