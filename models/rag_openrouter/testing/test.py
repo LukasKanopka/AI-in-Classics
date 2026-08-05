@@ -26,7 +26,7 @@ import requests
 import psycopg
 from dotenv import load_dotenv
 
-from cltk.lemmatize.latin.backoff import BackoffLatinLemmatizer as LatinBackoffLemmatizer
+from cltk.lemmatize.lat import LatinBackoffLemmatizer
 
 
 OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
