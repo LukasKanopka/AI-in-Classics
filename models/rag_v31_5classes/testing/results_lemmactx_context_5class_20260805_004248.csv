@@ -1,0 +1,865 @@
+idx,sentence,lemmas,context_hits,context_lemmas_used,context_polarities,context_debug,prompt_context_text
+1,Caelum pulchrum est.,caelum,1,caelum,caelum:0.5,lemma=caelum; pos=noun; polarity_score=0.5; has_polarity=positive; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=caelum pos=noun polarity_score=0.5 has_polarity=positive provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+2,Puer discipulus malus est.,discipulus malus puer,4,malus | malus | discipulus | puer,malus:-1.0 | malus:-1.0 | discipulus:0.0 | puer:0.0,lemma=malus; pos=adj; polarity_score=-1.0; has_polarity=negative; provenance=GOLD || lemma=malus; pos=noun; polarity_score=-1.0; has_polarity=negative; provenance=SILVER || lemma=discipulus; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD || lemma=puer; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=malus pos=adj polarity_score=-1.0 has_polarity=negative provenance=GOLD
+- lemma=malus pos=noun polarity_score=-1.0 has_polarity=negative provenance=SILVER
+- lemma=discipulus pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+- lemma=puer pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+3,Copiae amiserunt bellum.,bellum,1,bellum,bellum:0.0,lemma=bellum; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=bellum pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+4,Pater laudabat filium.,pater,1,pater,pater:0.0,lemma=pater; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=pater pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+5,Marcus Brutus tradidit suum amicum.,brutus suum,2,brutus | suum,brutus:-1.0 | suum:0.0,lemma=brutus; pos=adj; polarity_score=-1.0; has_polarity=negative; provenance=SILVER || lemma=suum; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=brutus pos=adj polarity_score=-1.0 has_polarity=negative provenance=SILVER
+- lemma=suum pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+6,Ego optimus miles eram.,miles,1,miles,miles:0.0,lemma=miles; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=miles pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+7,Quae scelera videmus?,,0,,,,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+
+(no lemma matches found)
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+8,Malum consilium est.,consilium malum,2,malum | consilium,malum:-1.0 | consilium:0.5,lemma=malum; pos=noun; polarity_score=-1.0; has_polarity=negative; provenance=GOLD || lemma=consilium; pos=noun; polarity_score=0.5; has_polarity=positive; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=malum pos=noun polarity_score=-1.0 has_polarity=negative provenance=GOLD
+- lemma=consilium pos=noun polarity_score=0.5 has_polarity=positive provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+9,Sum amicus eius,amicus,2,amicus | amicus,amicus:1.0 | amicus:1.0,lemma=amicus; pos=adj; polarity_score=1.0; has_polarity=positive; provenance=GOLD || lemma=amicus; pos=noun; polarity_score=1.0; has_polarity=positive; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=amicus pos=adj polarity_score=1.0 has_polarity=positive provenance=GOLD
+- lemma=amicus pos=noun polarity_score=1.0 has_polarity=positive provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+10,Brutus te laudavit,brutus,1,brutus,brutus:-1.0,lemma=brutus; pos=adj; polarity_score=-1.0; has_polarity=negative; provenance=SILVER,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=brutus pos=adj polarity_score=-1.0 has_polarity=negative provenance=SILVER
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+11,Patria delebatur,patria,1,patria,patria:0.0,lemma=patria; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=patria pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+12,Domus ustus erat.,domus,1,domus,domus:0.0,lemma=domus; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=domus pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+13,Gladiator praemium vicit.,gladiator praemium,2,praemium | gladiator,praemium:1.0 | gladiator:0.0,lemma=praemium; pos=noun; polarity_score=1.0; has_polarity=positive; provenance=GOLD || lemma=gladiator; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=praemium pos=noun polarity_score=1.0 has_polarity=positive provenance=GOLD
+- lemma=gladiator pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+14,Vita eius erat nimis brevis.,,0,,,,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+
+(no lemma matches found)
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+15,Panis fuit bonus.,bonus panis,3,bonus | bonus | panis,bonus:1.0 | bonus:1.0 | panis:0.0,lemma=bonus; pos=adj; polarity_score=1.0; has_polarity=positive; provenance=GOLD || lemma=bonus; pos=noun; polarity_score=1.0; has_polarity=positive; provenance=SILVER || lemma=panis; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=bonus pos=adj polarity_score=1.0 has_polarity=positive provenance=GOLD
+- lemma=bonus pos=noun polarity_score=1.0 has_polarity=positive provenance=SILVER
+- lemma=panis pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+16,Post paucas horas Caesar Asiam cepit,caesar,1,caesar,caesar:0.5,lemma=caesar; pos=noun; polarity_score=0.5; has_polarity=positive; provenance=SILVER,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=caesar pos=noun polarity_score=0.5 has_polarity=positive provenance=SILVER
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+17,Mater beatum infantem bene curat.,mater,1,mater,mater:0.0,lemma=mater; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=mater pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+18,Imperator non curat de salute suae nationis.,imperator,1,imperator,imperator:0.5,lemma=imperator; pos=noun; polarity_score=0.5; has_polarity=positive; provenance=SILVER,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=imperator pos=noun polarity_score=0.5 has_polarity=positive provenance=SILVER
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+19,Mater paterque suos pueros neglexerunt.,mater,1,mater,mater:0.0,lemma=mater; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=mater pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+20,Puer miser ab animali saevo necatus erat.,miser puer,2,miser | puer,miser:-1.0 | puer:0.0,lemma=miser; pos=adj; polarity_score=-1.0; has_polarity=negative; provenance=GOLD || lemma=puer; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=miser pos=adj polarity_score=-1.0 has_polarity=negative provenance=GOLD
+- lemma=puer pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+21,Venator ursam post longam pugnam necavit.,,0,,,,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+
+(no lemma matches found)
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+22,"Post redierunt Romam, nautae usi sunt otium.",otium,1,otium,otium:0.5,lemma=otium; pos=noun; polarity_score=0.5; has_polarity=positive; provenance=SILVER,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=otium pos=noun polarity_score=0.5 has_polarity=positive provenance=SILVER
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+23,Puella est laeta videre suum fratrem minorem.,puella suum,2,puella | suum,puella:0.0 | suum:0.0,lemma=puella; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD || lemma=suum; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=puella pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+- lemma=suum pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+24,Navis confractus est ab hostibus Romae.,,0,,,,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+
+(no lemma matches found)
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+25,Heros erat qui multos cives servavit.,,0,,,,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+
+(no lemma matches found)
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+26,Urbs ab hostibus malis victa deletaque est.,urbs,1,urbs,urbs:0.5,lemma=urbs; pos=noun; polarity_score=0.5; has_polarity=positive; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=urbs pos=noun polarity_score=0.5 has_polarity=positive provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+27,Magna facta discipulorum eius magistro veteri placuerunt.,,0,,,,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+
+(no lemma matches found)
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+28,Puellae iuveni curiosaeque libet in agros migrare.,,0,,,,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+
+(no lemma matches found)
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+29,Sol ita lucet ut fruges celeriter crescant.,sol,1,sol,sol:0.0,lemma=sol; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=sol pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+30,Imperator iussit milites interficere sine misericordia.,imperator misericordia,2,misericordia | imperator,misericordia:1.0 | imperator:0.5,lemma=misericordia; pos=noun; polarity_score=1.0; has_polarity=positive; provenance=GOLD || lemma=imperator; pos=noun; polarity_score=0.5; has_polarity=positive; provenance=SILVER,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=misericordia pos=noun polarity_score=1.0 has_polarity=positive provenance=GOLD
+- lemma=imperator pos=noun polarity_score=0.5 has_polarity=positive provenance=SILVER
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+31,Princeps sensit fas suum custodire patriam.,fas princeps suum,3,fas | princeps | suum,fas:1.0 | princeps:0.5 | suum:0.0,lemma=fas; pos=noun; polarity_score=1.0; has_polarity=positive; provenance=GOLD || lemma=princeps; pos=noun; polarity_score=0.5; has_polarity=positive; provenance=GOLD || lemma=suum; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=fas pos=noun polarity_score=1.0 has_polarity=positive provenance=GOLD
+- lemma=princeps pos=noun polarity_score=0.5 has_polarity=positive provenance=GOLD
+- lemma=suum pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+32,Amici Scipionis invitaverunt ad cenam post victoriam magnam vixit.,,0,,,,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+
+(no lemma matches found)
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+33,Vir egit gratias Venerem uxori pulchrae et Iunonem liberis.,,0,,,,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+
+(no lemma matches found)
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+34,Sceleratus vehemens expulsus erat sicut poena vitae vitiosae.,poena sceleratus,2,poena | sceleratus,poena:-1.0 | sceleratus:-1.0,lemma=poena; pos=noun; polarity_score=-1.0; has_polarity=negative; provenance=GOLD || lemma=sceleratus; pos=adj; polarity_score=-1.0; has_polarity=negative; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=poena pos=noun polarity_score=-1.0 has_polarity=negative provenance=GOLD
+- lemma=sceleratus pos=adj polarity_score=-1.0 has_polarity=negative provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+35,Fabulae a patre eorum narratae sororem fratremque oblectaverunt.,,0,,,,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+
+(no lemma matches found)
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+36,"Cupiditate aeterna devotus, desidero aliquam quae non desiderat me.",,0,,,,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+
+(no lemma matches found)
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+37,"Cum peste adfecti essent, boves iam moriebantur.",,0,,,,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+
+(no lemma matches found)
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+38,Puella puero nervoso dixit se reddere amorem eius.,puella,1,puella,puella:0.0,lemma=puella; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=puella pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+39,"Cum bellum tandem vicissent, cives magno gaudio celebrabant.",bellum,1,bellum,bellum:0.0,lemma=bellum; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=bellum pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+40,Umbra uxoris mortuae illum miserum ita persequitur ut otium numquam reperiat.,otium umbra,2,otium | umbra,otium:0.5 | umbra:0.0,lemma=otium; pos=noun; polarity_score=0.5; has_polarity=positive; provenance=SILVER || lemma=umbra; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=otium pos=noun polarity_score=0.5 has_polarity=positive provenance=SILVER
+- lemma=umbra pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+41,"Cum nemo audiat, poeta tristis queritur dominam eum relinquisse.",nemo poeta tristis,3,tristis | nemo | poeta,tristis:-1.0 | nemo:-0.5 | poeta:0.0,lemma=tristis; pos=adj; polarity_score=-1.0; has_polarity=negative; provenance=GOLD || lemma=nemo; pos=adj; polarity_score=-0.5; has_polarity=negative; provenance=SILVER || lemma=poeta; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=tristis pos=adj polarity_score=-1.0 has_polarity=negative provenance=GOLD
+- lemma=nemo pos=adj polarity_score=-0.5 has_polarity=negative provenance=SILVER
+- lemma=poeta pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+42,"Bono nuntio accepto, nuntius delectatus civibus nuntiat opem iam adventuram esse.",nuntius,1,nuntius,nuntius:0.0,lemma=nuntius; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=nuntius pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+43,"Vulgus surrexerunt fores aedis, necatatum et consauciatum multos.",,0,,,,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+
+(no lemma matches found)
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+44,Canes denique invenerunt aprum post diem longum et miserum ita venatores id potuerunt necare,longum,1,longum,longum:0.0,lemma=longum; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=longum pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+45,"Quod ea voluerat fratrem tam diu, puella celebravit quando mater peperit iterum.",mater puella,2,mater | puella,mater:0.0 | puella:0.0,lemma=mater; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD || lemma=puella; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=mater pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+- lemma=puella pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+46,"In oratone, orator optimus fuit et igitur multas coronas laurinas vicit.",orator,1,orator,orator:0.0,lemma=orator; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=orator pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+47,"Stultitiast, mater, venatum ducere invitas canes",mater,1,mater,mater:0.0,lemma=mater; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=mater pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+48,"Si quis metuens vivet, liber mihi non erit umquam",liber metuens,3,metuens | liber | liber,metuens:-1.0 | liber:0.5 | liber:0.0,lemma=metuens; pos=adj; polarity_score=-1.0; has_polarity=negative; provenance=GOLD || lemma=liber; pos=adj; polarity_score=0.5; has_polarity=positive; provenance=GOLD || lemma=liber; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=metuens pos=adj polarity_score=-1.0 has_polarity=negative provenance=GOLD
+- lemma=liber pos=adj polarity_score=0.5 has_polarity=positive provenance=GOLD
+- lemma=liber pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+49,"imperator promisit decem milia militum celerrime discessura esse, dummodo satis copiarum reciperent.",imperator satis,2,imperator | satis,imperator:0.5 | satis:0.5,lemma=imperator; pos=noun; polarity_score=0.5; has_polarity=positive; provenance=SILVER || lemma=satis; pos=adj; polarity_score=0.5; has_polarity=positive; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=imperator pos=noun polarity_score=0.5 has_polarity=positive provenance=SILVER
+- lemma=satis pos=adj polarity_score=0.5 has_polarity=positive provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+50,Cum cūrā docet ut discipulī bene discant,,0,,,,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+
+(no lemma matches found)
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+51,Sol lucet in caelo.,sol,1,sol,sol:0.0,lemma=sol; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=sol pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+52,Urbs Roma in Italia est.,urbs,1,urbs,urbs:0.5,lemma=urbs; pos=noun; polarity_score=0.5; has_polarity=positive; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=urbs pos=noun polarity_score=0.5 has_polarity=positive provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+53,Ego in villa ambulo.,,0,,,,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+
+(no lemma matches found)
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+54,Annus habet duodecim menses.,annus,1,annus,annus:0.0,lemma=annus; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=annus pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+55,Quid est vita sine amore?,,0,,,,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+
+(no lemma matches found)
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+56,"O quam felix es, qui omnia perdidisti!",felix,1,felix,felix:1.0,lemma=felix; pos=adj; polarity_score=1.0; has_polarity=positive; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=felix pos=adj polarity_score=1.0 has_polarity=positive provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+57,"Si Roma caderet, quid faceremus?",,0,,,,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+
+(no lemma matches found)
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+58,Utinam pax in mundo sit.,pax,1,pax,pax:0.5,lemma=pax; pos=noun; polarity_score=0.5; has_polarity=positive; provenance=SILVER,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=pax pos=noun polarity_score=0.5 has_polarity=positive provenance=SILVER
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+59,Puellula mea in villa cantat.,,0,,,,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+
+(no lemma matches found)
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+60,Homunculus ille nihil scit.,,0,,,,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+
+(no lemma matches found)
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+61,"Domine, salvum me fac.",,0,,,,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+
+(no lemma matches found)
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+62,Scientia nova in libris invenitur.,scientia,1,scientia,scientia:0.0,lemma=scientia; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=scientia pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+63,Ego sum lux mundi.,lux,1,lux,lux:0.0,lemma=lux; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=lux pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+64,Respublica in periculis versatur.,respublica,1,respublica,respublica:0.5,lemma=respublica; pos=noun; polarity_score=0.5; has_polarity=positive; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=respublica pos=noun polarity_score=0.5 has_polarity=positive provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+65,"Deus meus, quare me dereliquisti?",deus meus,2,deus | meus,deus:0.0 | meus:0.0,lemma=deus; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD || lemma=meus; pos=adj; polarity_score=0.0; has_polarity=neutral; provenance=SILVER,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=deus pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+- lemma=meus pos=adj polarity_score=0.0 has_polarity=neutral provenance=SILVER
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+66,Timor Domini initium sapientiae est.,initium timor,2,timor | initium,timor:-0.5 | initium:0.0,lemma=timor; pos=noun; polarity_score=-0.5; has_polarity=negative; provenance=GOLD || lemma=initium; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=timor pos=noun polarity_score=-0.5 has_polarity=negative provenance=GOLD
+- lemma=initium pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+67,Ego felum in villa vidi.,,0,,,,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+
+(no lemma matches found)
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+68,"Postquam milites in silvam intraverunt, ferae saevae eos insequebantur, et multi perierunt.",,0,,,,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+
+(no lemma matches found)
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+69,"Cum philosophi in academia disputarent, discipuli eorum nova praecepta didicerunt.",,0,,,,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+
+(no lemma matches found)
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"
+70,Domus mea igne consumpta est.,domus,1,domus,domus:0.0,lemma=domus; pos=noun; polarity_score=0.0; has_polarity=neutral; provenance=GOLD,"Lexicon evidence (lila.sentiment; word-level polarity hints only).
+These hints may be misleading and MUST NOT override the overall meaning of the full Latin sentence.
+Lexicon entries:
+- lemma=domus pos=noun polarity_score=0.0 has_polarity=neutral provenance=GOLD
+
+Return exactly one label from this set:
+VERY POSITIVE
+SOMEWHAT POSITIVE
+NEUTRAL
+SOMEWHAT NEGATIVE
+VERY NEGATIVE
+"

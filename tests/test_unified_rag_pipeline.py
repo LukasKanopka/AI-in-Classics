@@ -12,6 +12,23 @@ def test_sentiment_prompt_is_provider_neutral():
     assert "Roma gaudet." in prompt
     assert "ollama" not in prompt.lower()
     assert "openrouter" not in prompt.lower()
+    assert "Return exactly one valid label" in prompt
+    assert "VERY NEGATIVE" in prompt
+
+
+@pytest.mark.no_ollama
+@pytest.mark.parametrize(
+    ("raw", "expected"),
+    [
+        ("VERY POSITIVE (+1)", "positive"),
+        ("SOMEWHAT NEGATIVE", "negative"),
+        ("NEUTRAL (0)", "neutral"),
+    ],
+)
+def test_five_level_labels_collapse_to_api_contract(raw, expected):
+    from src.app.server_fast import _parse_sentiment_label
+
+    assert _parse_sentiment_label(raw) == expected
 
 
 @pytest.mark.no_ollama
@@ -34,7 +51,12 @@ def test_sentiment_response_contract_matches_across_providers(engine):
     )
 
     assert result["engine"] == engine
-    assert result["rag"] == {"enabled": True, "source": "latin-lexicon"}
+    assert result["rag"] == {
+        "enabled": False,
+        "requested": True,
+        "source": None,
+        "hit_count": 0,
+    }
     assert result["lexicon_priors_included"] is True
     assert result["label"] == "positive"
     assert result["confidence"] == 0.8
@@ -52,5 +74,10 @@ def test_response_normalizer_preserves_zero_scores():
         priors_json="",
     )
 
-    assert result["rag"] == {"enabled": False, "source": None}
+    assert result["rag"] == {
+        "enabled": False,
+        "requested": False,
+        "source": None,
+        "hit_count": 0,
+    }
     assert result["scores"] == {"positive": 0.0, "negative": 1.0, "neutral": 0.0}

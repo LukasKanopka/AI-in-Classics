@@ -6,6 +6,7 @@ from typing import Dict, Iterable, List, Literal, Optional, Any
 from pathlib import Path
 import json
 import os
+import re
 import httpx
 
 from .routers.probing_router import ProbingRouter
@@ -235,7 +236,13 @@ def _latin_lexicon_priors_json(text_clip: str, *, include: bool) -> str:
     if not include:
         return ""
     try:
-        from .latin_lexicon import resolve_database_url, make_latin_lexicon_annotator
+        from .latin_lexicon import (
+            direct_lila_sentiment_hits,
+            form_lookup_sentiment_hits,
+            make_latin_lexicon_annotator,
+            merge_sentiment_hits,
+            resolve_database_url,
+        )
 
         dsn = resolve_database_url()
         if not dsn:
@@ -248,6 +255,15 @@ def _latin_lexicon_priors_json(text_clip: str, *, include: bool) -> str:
                 ann.close()
             except Exception:
                 pass
+        form_hits = form_lookup_sentiment_hits(text_clip, dsn, limit=30)
+        priors = merge_sentiment_hits(priors, form_hits)
+        try:
+            legacy_hits = direct_lila_sentiment_hits(text_clip, dsn, limit=30)
+        except Exception:
+            # CLTK's optional model corpus is not guaranteed in every deployment.
+            # Keep the centralized annotator result when this enhancement is unavailable.
+            legacy_hits = []
+        priors = merge_sentiment_hits(priors, legacy_hits)
         if not isinstance(priors, dict):
             return ""
         return json.dumps(priors, ensure_ascii=False, separators=(",", ":")) + "\n\n"
@@ -256,21 +272,39 @@ def _latin_lexicon_priors_json(text_clip: str, *, include: bool) -> str:
 
 
 def _build_sentiment_prompt(text: str, priors_json: str = "") -> str:
-    """Build the provider-neutral sentiment prompt used by every LLM backend."""
+    """Build the compact five-level prompt used by every LLM backend."""
     return (
-        (
-            "If a JSON block named LEXICON_PRIORS is included, treat it as weak "
-            "evidence (coverage may be incomplete).\n\n"
-            if priors_json
-            else ""
-        )
+        "Classify the overall sentiment of the Ancient Latin text.\n"
+        "Valid labels: VERY POSITIVE, SOMEWHAT POSITIVE, NEUTRAL, "
+        "SOMEWHAT NEGATIVE, VERY NEGATIVE.\n"
+        "Word-level lexicon evidence is only a weak hint and must not override the full meaning.\n"
+        "Death, betrayal, destruction, serious harm, loss of war, or loss of home or "
+        "possessions must receive a negative label.\n"
+        "Return exactly one valid label and no explanation or punctuation.\n\n"
         + priors_json
-        + "Return ONLY a JSON object with these exact keys and types; no extra keys and no prose. "
-        'label: one of ["positive","negative","neutral"]; confidence: number in [0,1]; '
-        'scores: {"positive":number,"negative":number,"neutral":number}; '
-        "translation: string|null; analysis: object|null. "
-        f"Text: {text}"
+        + f"Latin text: {text}\n\nLabel:"
     )
+
+
+def _parse_sentiment_label(text: str) -> str:
+    normalized = re.sub(r"[^A-Z ]", " ", str(text or "").upper())
+    normalized = re.sub(r"\s+", " ", normalized).strip()
+    for label in (
+        "VERY POSITIVE",
+        "SOMEWHAT POSITIVE",
+        "VERY NEGATIVE",
+        "SOMEWHAT NEGATIVE",
+        "POSITIVE",
+        "NEGATIVE",
+        "NEUTRAL",
+    ):
+        if label in normalized:
+            if "POSITIVE" in label:
+                return "positive"
+            if "NEGATIVE" in label:
+                return "negative"
+            return "neutral"
+    return "neutral"
 
 
 def _normalize_sentiment_response(
@@ -281,7 +315,7 @@ def _normalize_sentiment_response(
     priors_json: str,
 ) -> Dict[str, Any]:
     """Normalize provider output into the common /api/analyze response contract."""
-    label = str(parsed.get("label") or "neutral").lower()
+    label = _parse_sentiment_label(str(parsed.get("label") or raw_text or "neutral"))
     if label not in _VALID_LABELS:
         label = "neutral"
 
@@ -303,11 +337,21 @@ def _normalize_sentiment_response(
         except (TypeError, ValueError):
             return 1.0 if label == name else 0.0
 
+    hit_count = 0
+    if priors_json:
+        try:
+            envelope = json.loads(priors_json).get("LEXICON_PRIORS", {})
+            hit_count = int(envelope.get("actual_hit_count", len(envelope.get("hits", []))))
+        except (TypeError, ValueError, json.JSONDecodeError):
+            hit_count = 0
+
     return {
         "engine": engine,
         "rag": {
-            "enabled": bool(priors_json),
-            "source": "latin-lexicon" if priors_json else None,
+            "enabled": hit_count > 0,
+            "requested": bool(priors_json),
+            "source": "latin-lexicon" if hit_count > 0 else None,
+            "hit_count": hit_count,
         },
         # Retained for clients that predate the unified `rag` metadata.
         "lexicon_priors_included": bool(priors_json),
@@ -526,38 +570,27 @@ async def _analyze_with_model(
     if engine == "hugging face":
         res = _hf_sentiment(text, hf_classifier_params)
         return {"engine": "hugging face", "labels and scores by sentence": res}
-    from .ollama_client import generate_json_with_analysis
+    from .ollama_client import generate_sentiment_label
     priors_json = _latin_lexicon_priors_json(
         (text or "").strip()[:6000], include=bool(include_lexicon_priors)
     )
     prompt = _build_sentiment_prompt(text, priors_json)
 
     # extract options safely
-    np = int(options.get("num_predict", 1024)) if options else 1024
+    np = int(options.get("num_predict", 12)) if options else 12
     temp = float(options.get("temperature", 0.0)) if options else 0.0
     top_p = float(options.get("top_p", 0.9)) if options else 0.9
 
     runtime_model = resolve_available_model_tag(model_id)
-    parsed, raw_text = await generate_json_with_analysis(
+    raw_text = await generate_sentiment_label(
         runtime_model,
         prompt,
         num_predict=np,
         temperature=temp,
         top_p=top_p,
-        extra_options=options,
         timeout_s=75.0,
-        retries=1,
-        force_raw=raw,
-        out_format=fmt or "json",
     )
-
-    translation = parsed.get("translation", None)
-    if not translation:
-        try:
-            translation = await translate_en(runtime_model, text)
-        except Exception:
-            translation = None
-    parsed["translation"] = translation
+    parsed = {"label": _parse_sentiment_label(raw_text)}
     return _normalize_sentiment_response(
         parsed, raw_text, engine="ollama", priors_json=priors_json
     )
@@ -582,7 +615,7 @@ async def _analyze_with_openrouter(
     # best-effort option mapping
     temp = float((options or {}).get("temperature", 0.0) or 0.0)
     top_p = float((options or {}).get("top_p", 0.9) or 0.9)
-    max_tokens = int((options or {}).get("num_predict", 1024) or 1024)
+    max_tokens = int((options or {}).get("num_predict", 12) or 12)
 
     headers = {
         "Authorization": auth_header,
@@ -622,7 +655,7 @@ async def _analyze_with_openrouter(
     raw_content = (((data or {}).get("choices") or [{}])[0].get("message") or {}).get(
         "content"
     ) or ""
-    parsed = _safe_parse_json_text(str(raw_content))
+    parsed = {"label": _parse_sentiment_label(str(raw_content))}
     return _normalize_sentiment_response(
         parsed, str(raw_content), engine="openrouter", priors_json=priors_json
     )

@@ -399,6 +399,36 @@ async def generate_text(
     return (data.get("response") or "").strip()
 
 
+async def generate_sentiment_label(
+    model: str,
+    prompt: str,
+    *,
+    temperature: float = 0.0,
+    num_predict: int = 12,
+    top_p: float = 0.9,
+    timeout_s: float = 75.0,
+) -> str:
+    """Generate one sentiment label while preserving the model's Modelfile system prompt."""
+    payload = {
+        "model": resolve_available_model_tag(model),
+        "prompt": prompt,
+        "stream": False,
+        "raw": False,
+        "options": {
+            "temperature": temperature,
+            "num_predict": num_predict,
+            "top_p": top_p,
+            "mirostat": 0,
+            "repeat_penalty": 1.0,
+        },
+    }
+    async with _make_client(timeout_s) as client:
+        response = await client.post(f"{OLLAMA_HOST}/api/generate", json=payload)
+        response.raise_for_status()
+        data = response.json()
+    return str(data.get("response") or "").strip()
+
+
 async def generate_json_with_analysis(
     model: str,
     prompt: str,

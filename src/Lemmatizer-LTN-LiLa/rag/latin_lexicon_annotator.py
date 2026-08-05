@@ -794,6 +794,9 @@ class LatinLexiconAnnotator:
 
         # --- Fetch sentiment from map ---
         dict_sentiment = self._fetch_sentiment_by_lemma_id(dict_lemma_ids)
+        # The materialized map is intentionally conservative and can lag behind
+        # lila.sentiment. Fall back to a normalized direct lemma join for coverage.
+        direct_sentiment = self._fetch_sentiment_rows(sorted(lemma_counts.keys()))
 
         lemma_id_to_key: dict[int, str] = {}
         for lid, m in lemma_meta_by_id.items():
@@ -809,6 +812,8 @@ class LatinLexiconAnnotator:
             if not lemma_key:
                 continue
             rows = dict_sentiment.get(lid, [])
+            if not rows:
+                rows = direct_sentiment.get(lemma_key, [])
             if not rows:
                 continue
             bucket = lemma_pos_bucket.get(lemma_key, "other")

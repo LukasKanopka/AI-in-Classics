@@ -12,7 +12,7 @@ from typing import Dict, List, Any
 import requests
 import psycopg
 from dotenv import load_dotenv
-from cltk import NLP
+from cltk.lemmatize.lat import LatinBackoffLemmatizer
 
 OLLAMA_API_URL = "http://localhost:11434/api/generate"
 OLLAMA_MODEL = "latin-sentiment-llama31-5class"
@@ -241,7 +241,7 @@ def main():
     if not cases:
         raise SystemExit(f"No test cases found in {TEST_JSON}")
 
-    lemmatizer = NLP("lat")
+    lemmatizer = LatinBackoffLemmatizer()
 
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
     results_csv = OUT_DIR / f"results_lemmactx_5class_{ts}.csv"
@@ -321,20 +321,8 @@ def main():
             if exp3 in per3:
                 per3[exp3]["total"] += 1
 
-            doc = lemmatizer.analyze(sent)
-
-            lemmas: List[str] = []
-
-            if hasattr(doc, "lemmata") and doc.lemmata:
-                for lemma in doc.lemmata:
-                    if lemma:
-                        lemmas.append(normalize_lemma(lemma))
-            elif hasattr(doc, "words") and doc.words:
-                for w in doc.words:
-                    lemma = getattr(w, "lemma", None)
-                    if lemma:
-                        lemmas.append(normalize_lemma(lemma))
-            
+            pairs = lemmatizer.lemmatize(tokenize_simple(sent))
+            lemmas = [normalize_lemma(lemma) for _, lemma in pairs if lemma]
             context_rows = fetch_lemma_context(conn, lemmas)
 
             context_lemmas_used: List[str] = []
