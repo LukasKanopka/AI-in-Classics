@@ -255,6 +255,71 @@ def _latin_lexicon_priors_json(text_clip: str, *, include: bool) -> str:
         return ""
 
 
+def _build_sentiment_prompt(text: str, priors_json: str = "") -> str:
+    """Build the provider-neutral sentiment prompt used by every LLM backend."""
+    return (
+        (
+            "If a JSON block named LEXICON_PRIORS is included, treat it as weak "
+            "evidence (coverage may be incomplete).\n\n"
+            if priors_json
+            else ""
+        )
+        + priors_json
+        + "Return ONLY a JSON object with these exact keys and types; no extra keys and no prose. "
+        'label: one of ["positive","negative","neutral"]; confidence: number in [0,1]; '
+        'scores: {"positive":number,"negative":number,"neutral":number}; '
+        "translation: string|null; analysis: object|null. "
+        f"Text: {text}"
+    )
+
+
+def _normalize_sentiment_response(
+    parsed: Dict[str, Any],
+    raw_text: str,
+    *,
+    engine: str,
+    priors_json: str,
+) -> Dict[str, Any]:
+    """Normalize provider output into the common /api/analyze response contract."""
+    label = str(parsed.get("label") or "neutral").lower()
+    if label not in _VALID_LABELS:
+        label = "neutral"
+
+    try:
+        confidence = min(1.0, max(0.0, float(parsed.get("confidence", 0.5))))
+    except (TypeError, ValueError):
+        confidence = 0.5
+
+    raw_scores = parsed.get("scores")
+    if not isinstance(raw_scores, dict):
+        raw_scores = {}
+
+    def score(name: str) -> float:
+        value = raw_scores.get(name)
+        if value is None:
+            return 1.0 if label == name else 0.0
+        try:
+            return float(value)
+        except (TypeError, ValueError):
+            return 1.0 if label == name else 0.0
+
+    return {
+        "engine": engine,
+        "rag": {
+            "enabled": bool(priors_json),
+            "source": "latin-lexicon" if priors_json else None,
+        },
+        # Retained for clients that predate the unified `rag` metadata.
+        "lexicon_priors_included": bool(priors_json),
+        "label": label,
+        "confidence": confidence,
+        "scores": {name: score(name) for name in ("positive", "negative", "neutral")},
+        "raw_model_output": raw_text,
+        "translation": parsed.get("translation"),
+        "analysis": parsed.get("analysis"),
+    }
+
+
 async def _complete_openrouter_prompt(
     prompt: str,
     *,
@@ -465,14 +530,7 @@ async def _analyze_with_model(
     priors_json = _latin_lexicon_priors_json(
         (text or "").strip()[:6000], include=bool(include_lexicon_priors)
     )
-    prompt = (
-        ("If a JSON block named LEXICON_PRIORS is included, treat it as weak evidence (coverage may be incomplete).\n\n" if priors_json else "")
-        + priors_json
-        + "Return ONLY a JSON object with these exact keys and types; no extra keys and no prose. "
-        'label: one of ["positive","negative","neutral"]; confidence: number in [0,1]; '
-        'scores: {"positive":number,"negative":number,"neutral":number}; translation: string|null; analysis: object|null. '
-        f"Text: {text}"
-    )
+    prompt = _build_sentiment_prompt(text, priors_json)
 
     # extract options safely
     np = int(options.get("num_predict", 1024)) if options else 1024
@@ -493,40 +551,16 @@ async def _analyze_with_model(
         out_format=fmt or "json",
     )
 
-    label = str(parsed.get("label") or "neutral").lower()
-    if label not in {"positive", "negative", "neutral"}:
-        label = "neutral"
-
-    confidence = float(parsed.get("confidence") or 0.5)
-    scores = parsed.get("scores") or {}
-    scores = {
-        "positive": float(
-            scores.get("positive") or (1.0 if label == "positive" else 0.0)
-        ),
-        "negative": float(
-            scores.get("negative") or (1.0 if label == "negative" else 0.0)
-        ),
-        "neutral": float(scores.get("neutral") or (1.0 if label == "neutral" else 0.0)),
-    }
-
     translation = parsed.get("translation", None)
     if not translation:
         try:
             translation = await translate_en(runtime_model, text)
         except Exception:
             translation = None
-    analysis = parsed.get("analysis", None)
-
-    return {
-        "engine": "ollama",
-        "lexicon_priors_included": bool(priors_json),
-        "label": label,
-        "confidence": confidence,
-        "scores": scores,
-        "raw_model_output": raw_text,
-        "translation": translation,
-        "analysis": analysis,
-    }
+    parsed["translation"] = translation
+    return _normalize_sentiment_response(
+        parsed, raw_text, engine="ollama", priors_json=priors_json
+    )
 
 
 async def _analyze_with_openrouter(
@@ -543,14 +577,7 @@ async def _analyze_with_openrouter(
     priors_json = _latin_lexicon_priors_json(
         (text or "").strip()[:6000], include=bool(include_lexicon_priors)
     )
-    prompt = (
-        ("If a JSON block named LEXICON_PRIORS is included, treat it as weak evidence (coverage may be incomplete).\n\n" if priors_json else "")
-        + priors_json
-        + "Return ONLY a JSON object with these exact keys and types; no extra keys and no prose. "
-        'label: one of ["positive","negative","neutral"]; confidence: number in [0,1]; '
-        'scores: {"positive":number,"negative":number,"neutral":number}; translation: string|null; analysis: object|null. '
-        f"Text: {text}"
-    )
+    prompt = _build_sentiment_prompt(text, priors_json)
 
     # best-effort option mapping
     temp = float((options or {}).get("temperature", 0.0) or 0.0)
@@ -596,47 +623,9 @@ async def _analyze_with_openrouter(
         "content"
     ) or ""
     parsed = _safe_parse_json_text(str(raw_content))
-
-    label = str(parsed.get("label") or "neutral").lower()
-    if label not in {"positive", "negative", "neutral"}:
-        label = "neutral"
-
-    confidence = parsed.get("confidence")
-    try:
-        confidence = float(confidence)
-    except Exception:
-        confidence = 0.5
-
-    scores = parsed.get("scores") or {}
-    try:
-        scores = {
-            "positive": float(
-                scores.get("positive") or (1.0 if label == "positive" else 0.0)
-            ),
-            "negative": float(
-                scores.get("negative") or (1.0 if label == "negative" else 0.0)
-            ),
-            "neutral": float(
-                scores.get("neutral") or (1.0 if label == "neutral" else 0.0)
-            ),
-        }
-    except Exception:
-        scores = {
-            "positive": 0.0,
-            "negative": 0.0,
-            "neutral": 1.0,
-        }
-
-    return {
-        "engine": "openrouter",
-        "lexicon_priors_included": bool(priors_json),
-        "label": label,
-        "confidence": confidence,
-        "scores": scores,
-        "raw_model_output": str(raw_content),
-        "translation": parsed.get("translation", None),
-        "analysis": parsed.get("analysis", None),
-    }
+    return _normalize_sentiment_response(
+        parsed, str(raw_content), engine="openrouter", priors_json=priors_json
+    )
 
 
 @app.post("/api/analyze")
@@ -661,14 +650,18 @@ async def analyze(body: AnalyzeBody, request: Request):
             )
             return JSONResponse(res)
         if provider in {"ollama-rag", "rag"}:
-            # Optional: RAG-enhanced classification. Kept behind an explicit provider to
-            # avoid breaking local Ollama setups that don't have DB/CLTK configured.
-            try:
-                from .latin_llama31_rag import analyze_latin_sentiment_with_rag  # type: ignore
-            except Exception as e:
-                raise HTTPException(status_code=500, detail=f"RAG sentiment unavailable: {e}")
+            # Legacy registry aliases now use the same retrieval, prompt, parsing, and
+            # response contract as Ollama and OpenRouter. Only transport stays provider-specific.
             model_id = body.model_id or os.getenv("OLLAMA_RAG_MODEL") or "latin_ollama_model:1.0.0"
-            res = await analyze_latin_sentiment_with_rag(text, model_id)
+            res = await _analyze_with_model(
+                text,
+                model_id,
+                "ollama",
+                options=body.options,
+                raw=body.raw,
+                fmt=body.format,
+                include_lexicon_priors=True,
+            )
             return JSONResponse(res)
         if provider == "latin_bert":
             # Run the locally-loaded Latin BERT model.
@@ -909,5 +902,3 @@ def api_health():
 def api_model_registry():
     registry = get_registry()
     return registry.available_models()
-
-

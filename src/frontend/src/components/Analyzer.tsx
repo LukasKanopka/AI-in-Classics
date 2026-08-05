@@ -945,7 +945,7 @@ export default function Analyzer() {
                                         onChange={(e) => setAnalyzeIncludePriors(e.target.checked)}
                                         disabled={language !== "latin"}
                                     />
-                                    RAG priors
+                                    Shared RAG context
                                 </label>
 
                             <button type="submit" disabled={loading}>
@@ -1051,7 +1051,7 @@ export default function Analyzer() {
                                     onChange={(e) => setAnalyzeIncludePriors(e.target.checked)}
                                     disabled={language !== "latin"}
                                 />
-                                RAG priors
+                                Shared RAG context
                             </label>
 
                             <button type="submit" disabled={loading}>
@@ -1471,8 +1471,8 @@ export default function Analyzer() {
                                                     <div className="model-settings-label">Confidence</div>
                                                     <div>{typeof confidence === "number" ? `${(confidence * 100).toFixed(1)}%` : "—"}</div>
 
-                                                    <div className="model-settings-label">RAG priors</div>
-                                                    <div>{(r as any)?.lexicon_priors_included ? "Included" : "Not included"}</div>
+                                                    <div className="model-settings-label">Shared RAG context</div>
+                                                    <div>{((r as any)?.rag?.enabled ?? (r as any)?.lexicon_priors_included) ? "Included" : "Not included"}</div>
                                                 </div>
 
                                                 <div className="model-settings-grid">

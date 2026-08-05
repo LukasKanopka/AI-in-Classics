@@ -56,9 +56,12 @@ class OllamaProvider(ChatProvider):
     def __init__(self, model_id: str):
         self.model_id = model_id
         try:
-            from app.ollama_client import chat_stream  # type: ignore
+            from ..ollama_client import chat_stream  # type: ignore
         except Exception:
-            from ollama_client import chat_stream  # type: ignore
+            try:
+                from app.ollama_client import chat_stream  # type: ignore
+            except Exception:
+                from ollama_client import chat_stream  # type: ignore
         self._chat_stream = chat_stream
 
     def complete(
